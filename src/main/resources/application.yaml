@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: sample-backend
+
+mybatis:
+  mapper-locations:
+    - classpath*:mapper/postgres/*.xml
