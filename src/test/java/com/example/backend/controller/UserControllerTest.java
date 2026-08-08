@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.controller.request.CreateUserRequest;
+import com.example.backend.controller.request.ListByUserIdsRequest;
 import com.example.backend.controller.request.UpdateNameRequest;
 import com.example.backend.controller.response.UpdateNameResponse;
 import com.example.backend.controller.response.UserResponse;
@@ -46,6 +47,16 @@ class UserControllerTest {
                 .thenReturn(List.of(new UserOutput("1", "test")));
 
         List<UserResponse> response = userController.list();
+        assertEquals(1, response.size());
+    }
+
+    @Test
+    void listByUserIds() {
+        when(userService.listByUserIds(any()))
+                .thenReturn(List.of(new UserOutput("1", "test")));
+
+        ListByUserIdsRequest request = new ListByUserIdsRequest(List.of("1"));
+        List<UserResponse> response = userController.listByUserIds(request);
         assertEquals(1, response.size());
     }
 

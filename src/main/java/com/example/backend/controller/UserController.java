@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import com.example.backend.controller.request.ListByUserIdsRequest;
 import com.example.backend.controller.response.UserResponse;
 import com.example.backend.controller.request.CreateUserRequest;
 import com.example.backend.controller.request.UpdateNameRequest;
@@ -50,6 +51,19 @@ public class UserController {
                 .map(UserResponse::from)
                 .toList();
 
+    }
+
+    @PostMapping("/search")
+    public List<UserResponse> listByUserIds(@RequestBody ListByUserIdsRequest request) {
+        List<String> userIds = request.userIds();
+        log.debug("複数ユーザを取得します。件数 = {}", userIds.size());
+
+        List<UserOutput> outputs = userService.listByUserIds(userIds);
+        log.debug("複数ユーザを取得しました。件数 = {}", outputs.size());
+
+        return outputs.stream()
+                .map(UserResponse::from)
+                .toList();
     }
 
     @GetMapping("/{id}")
