@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class LoggingAspect {
 
+  // ProceedingJoinPoint.proceed() declares Throwable, and this aspect logs then rethrows it.
+  @SuppressWarnings("PMD.AvoidCatchingGenericException")
   @Around("execution(* com.example.backend..*(..))")
   public Object logging(ProceedingJoinPoint joinPoint) throws Throwable {
     String className = joinPoint.getSignature().getDeclaringType().getSimpleName();
