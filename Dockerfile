@@ -7,8 +7,10 @@ COPY mvnw .
 COPY pom.xml .
 
 COPY sample-core/pom.xml sample-core/pom.xml
+COPY sample-backend-client/pom.xml sample-backend-client/pom.xml
 COPY sample-backend/pom.xml sample-backend/pom.xml
 COPY sample-batch/pom.xml sample-batch/pom.xml
+COPY sample-bff/pom.xml sample-bff/pom.xml
 COPY sample-loadtest/pom.xml sample-loadtest/pom.xml
 
 RUN chmod +x mvnw
@@ -16,8 +18,10 @@ RUN --mount=type=cache,target=/root/.m2 \
     ./mvnw -pl sample-backend -am dependency:go-offline
 
 COPY sample-core sample-core
+COPY sample-backend-client sample-backend-client
 COPY sample-backend sample-backend
 COPY sample-batch sample-batch
+COPY sample-bff sample-bff
 COPY sample-loadtest sample-loadtest
 
 RUN --mount=type=cache,target=/root/.m2 \
@@ -29,7 +33,5 @@ FROM eclipse-temurin:25-jre
 WORKDIR /app
 
 COPY --from=build /workspace/sample-backend/target/*.jar app.jar
-
-EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
