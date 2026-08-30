@@ -32,7 +32,9 @@ FROM eclipse-temurin:25-jre
 
 WORKDIR /app
 
-RUN groupadd --system app && useradd --system --gid app app
+RUN groupadd --system app \
+    && useradd --system --gid app app \
+    && rm -f /usr/bin/pebble
 
 COPY --from=build --chown=app:app /workspace/sample-backend/target/*.jar app.jar
 
